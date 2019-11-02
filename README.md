@@ -1,2 +1,2 @@
 # HackIO2019
-2019 HackIO Project
+2019 HackOHIO Project
