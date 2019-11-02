@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Subreddit Analyzer</h1>
+    <form action="/analyze" method="post">
+        r/<input autocomplete="off" autofocus name="subreddit" placeholder="Subreddit" type="text">
+        <select name="tool">
+            <option disabled selected value="">Tool</option>
+            <option value="Life Cycle">Life Cycle</option>
+            <option value="Sentiment Analysis">Sentiment Analysis</option>
+            <option value="Keyword Distribution">Keyword Distribution</option>
+            <option value="Numerical Analysis">Numerical Analysis</option>
+        </select>
+        <input type="submit" value="Analyze">
+    </form>
+
+    <script>
+
+        document.querySelector('form').onsubmit = function() {
+            if (!document.querySelector('input').value) {
+                alert('You must provide a valid subreddit!');
+                return false;
+            }
+            else if (!document.querySelector('select').value) {
+                alert('You must provide a tool!');
+                return false;
+            }
+            return true;
+        };
+
+    </script>
+
+{% endblock %}
+

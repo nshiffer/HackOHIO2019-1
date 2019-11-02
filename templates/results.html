@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Results</h1>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post["name"] }} from {{ student["dorm"] }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

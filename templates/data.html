@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Data</h1>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post["subreddit"] }} from {{ post["subreddit"] }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
