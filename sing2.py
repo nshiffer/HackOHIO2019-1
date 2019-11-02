@@ -1,3 +1,4 @@
+# This program analyzes words and username that appears in top 25 posts and top 3 comments of each post
 import re
 import praw
 
