@@ -1,15 +1,16 @@
 import praw
+from datetime import datetime
 
 
 def get_life_cycle(comments):
     # Get days between first and second to last comments
     if len(comments) >= 3:
-        earliest = (min(comments)) / 60 / 60 / 24
+        earliest = datetime.fromtimestamp(min(comments))
         comments.remove(max(comments))
-        latest = (max(comments)) / 60 / 60 / 24
-        life_cycle = latest - earliest
+        latest = datetime.fromtimestamp(max(comments))
+        life_cycle = (latest - earliest).days
     else:
-        life_cycle = 1
+        life_cycle = 0
 
     return life_cycle
 
