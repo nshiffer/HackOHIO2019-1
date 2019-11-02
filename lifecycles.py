@@ -3,10 +3,14 @@ import praw
 
 def get_life_cycle(comments):
     # Get days between first and second to last comments
-    earliest = (min(comments)) / 60 / 60 / 24
-    comments.remove(max(comments))
-    latest = (max(comments)) / 60 / 60 / 24
-    life_cycle = latest - earliest
+    if len(comments) >= 3:
+        earliest = (min(comments)) / 60 / 60 / 24
+        comments.remove(max(comments))
+        latest = (max(comments)) / 60 / 60 / 24
+        life_cycle = latest - earliest
+    else:
+        life_cycle = 1
+
     return life_cycle
 
 
@@ -38,11 +42,11 @@ def main():
     reddit = praw.Reddit(client_id=client_id,
                          client_secret=client_secret, user_agent=user_agent)
 
-    page = reddit.subreddit('osu')
-    top_n_posts = page.top(limit=25)
+    page = reddit.subreddit('aww')
+    hot_n_posts = page.hot(limit=25)
 
     # Get the average life cycle across all posts
-    all_life_cycles = get_life_cycles(top_n_posts)
+    all_life_cycles = get_life_cycles(hot_n_posts)
     avg_life = sum(all_life_cycles) / len(all_life_cycles)
 
     print(avg_life)
