@@ -10,7 +10,7 @@ def get_life_cycle(comments):
         latest = datetime.fromtimestamp(max(comments))
         life_cycle = (latest - earliest).days
     else:
-        life_cycle = 1
+        life_cycle = 0
 
     return life_cycle
 
@@ -59,7 +59,7 @@ def main():
     all_life_cycles = get_life_cycles(hot_n_posts)
     avg_life = sum(all_life_cycles) / len(all_life_cycles)
     avg_life = truncate(avg_life, 2)
-    print("The average lifespan of the top 25 posts on "
+    print("The average lifespan of the hottest 25 posts on "
           "r/", sub_name, " is ", avg_life, " days.")
 
 
