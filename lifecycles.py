@@ -2,6 +2,7 @@ import praw
 
 
 def get_life_cycle(comments):
+    # Get days between first and second to last comments
     earliest = (min(comments)) / 60 / 60 / 24
     comments.remove(max(comments))
     latest = (max(comments)) / 60 / 60 / 24
@@ -12,6 +13,7 @@ def get_life_cycle(comments):
 def get_life_cycles(top_posts):
     all_posts_comments = []
 
+    # Store all comments for each post
     for post in top_posts:
         post.comments.replace_more(limit=None)
         posts_comments = []
@@ -21,6 +23,7 @@ def get_life_cycles(top_posts):
 
     life_cycles = []
 
+    # Get the life cycle for each post
     for post in all_posts_comments:
         post_life = get_life_cycle(post)
         life_cycles.append(post_life)
@@ -38,6 +41,7 @@ def main():
     page = reddit.subreddit('osu')
     top_n_posts = page.top(limit=25)
 
+    # Get the average life cycle across all posts
     all_life_cycles = get_life_cycles(top_n_posts)
     avg_life = sum(all_life_cycles) / len(all_life_cycles)
 
