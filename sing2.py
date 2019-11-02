@@ -1,0 +1,93 @@
+import re
+import praw
+
+# garbage is usually is going to be at the end of the word.
+garbage =['.',',','?','!']
+# This function will get rid of the garbage from the filter
+def filter(str, separators):
+    j = 0 # increment to 4
+    i = -1 # index of garbages if not -1
+    while i==-1 and j<4:
+        i = str.find(separators[j])
+        j += 1
+    #At this point, if i != -1, we need to get rid of the garbage
+    if i != -1:
+        str = str[0:i]
+    return str
+
+
+
+id = 'NlaCtua8R1LnPg'
+secret = 'sMEHNGFhxG-ziAHlqGl2WwXKsbQ' #in the picture
+agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36'
+
+#look up "what's my user agent" on google
+reddit = praw.Reddit(client_id = id, client_secret = secret, user_agent = agent)
+
+#Also create output files to write to
+outputFile = open(r'output.txt', 'w+') #this will save all words from top 25 posts and top 3 comments from each post
+userOutput = open(r'outputUsers.txt', 'w+') #this will save all user names of top 25 posts and top 3 comments of each
+
+#Code below should ask the user for a subreddit to examine
+#then print the headcount of subscribers
+subredditName = input("Which subreddit's top3 posts you wanna examine?")
+page = reddit.subreddit(subredditName)
+headCount = page.subscribers
+print('this subreddit has headcount of: ', headCount)
+
+#Code below prints the username of the top 25 post and top 3 comments of each
+top_posts = page.top(limit = 25)
+for posts in top_posts:
+   userOutput.write(str(posts.author))
+   userOutput.write('\n')
+
+   topThreeComments = posts.comments[0:3] # a list with top 3 comments (class=comment)
+   for comment in topThreeComments:
+      userOutput.write(str(comment.author))
+      userOutput.write('\n')
+#DON'T CHANGE! FURTHER ANALYZE USING R or PYTHON
+
+print('Finished outputting user names')
+
+#Now print words from title, body of top 25 submission and top 3 comments of each posts
+top_posts2 = page.top(limit = 25)
+for post in top_posts2:
+
+    title = post.title
+    postBody = post.selftext
+    titleWords = title.split()
+    bodyWords = postBody.split()
+
+#process the words in the title
+    for tword in titleWords:
+        newword = filter(tword, garbage)
+        if newword.isalnum():
+            outputFile.write(newword.lower())
+            outputFile.write('\n')
+#proces the words in the body
+    for bword in bodyWords:
+        newword = filter(bword, garbage)
+        if newword.isalnum():
+            outputFile.write(newword.lower())
+            outputFile.write('\n')
+
+#process top 3 comments of each post
+    submissions = reddit.submission(id = post.id)
+    comment_page = submissions.comments
+    top_comment = comment_page[0:3] #by default, this will be the best comment of the post
+
+    for comments in top_comment:
+        commentBody = comments.body
+        words = commentBody.split() #parse the comment by spaces
+
+        for word in words:
+            newword = filter(word, garbage) # cut all the "garbages" (look on top of this file)
+            if newword.isalnum():
+                outputFile.write(newword.lower())
+                outputFile.write('\n')
+
+#close files
+outputFile.close() # this should be after I process the file
+userOutput.close()
+
+print('Finished writing output file!')
