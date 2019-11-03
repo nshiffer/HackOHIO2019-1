@@ -88,8 +88,8 @@ for post in top_posts2:
                 outputFile.write(',')
 
 #add a ZYXYZ and a new line at the end so the files don't end with comma
-outputFile.write('ZYXYZ')
-userOutput.write('ZYXYZ')
+outputFile.write(' ')
+userOutput.write(' ')
 outputFile.write('\n')
 userOutput.write('\n')
 
