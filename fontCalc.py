@@ -49,5 +49,15 @@ def fontCalc(dict):
 userFontSizes = fontCalc(userMap)
 wordFontSizes = fontCalc(wordMap)
 
+countFile = open("CountFile.csv", "w")
 
-print(nima)
+for originalWords in wordFontSizes:
+    countFile.write(originalWords)
+    countFile.write(',')
+    countFile.write(str(wordFontSizes[originalWords]))
+    countFile.write(',')
+    countFile.write('\n')
+
+countFile.write('\n')
+
+print('nima')
