@@ -2,6 +2,9 @@
 import re
 import praw
 
+#common words should be taken out of the file
+commonWords = ['the', 'in', 'on', 'a', 'an', 'to', 'from', 'for', 'that', 'it', 'as', 'at', 'is', 'are', 'am', 'can',
+               'be', 'was', 'were', 'and', 'or', 'he', 'she', 'of', 'by', 'they', 'we','i', 'my', 'have', 'if', 'will']
 # garbage is usually is going to be at the end of the word.
 garbage =['.',',','?','!']
 # This function will get rid of the garbage from the filter
@@ -57,19 +60,19 @@ for post in top_posts2:
 #process the words in the title
     for tword in titleWords:
         newword = filter(tword, garbage)
-        if newword.isalnum():
+        if newword.isalnum() and newword not in commonWords:
             outputFile.write(newword.lower())
             outputFile.write(',')
 #proces the words in the body
     for bword in bodyWords:
         newword = filter(bword, garbage)
-        if newword.isalnum():
+        if newword.isalnum() and newword not in commonWords:
             outputFile.write(newword.lower())
             outputFile.write(',')
 
 
 
-#add a ZYXYZ and a new line at the end so the files don't end with comma
+#add a ' ' and a new line at the end so the files don't end with comma
 outputFile.write(' ')
 userOutput.write(' ')
 outputFile.write('\n')
