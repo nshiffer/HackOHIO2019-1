@@ -37,21 +37,21 @@ headCount = page.subscribers
 print('this subreddit has headcount of: ', headCount)
 
 #Code below prints the username of the top 25 post and top 3 comments of each
-top_posts = page.top(limit = 25)
+top_posts = page.top('day',limit = 25)
 for posts in top_posts:
-   userOutput.write(str(posts.author))
-   userOutput.write('\n')
+    userOutput.write(str(posts.author))
+    userOutput.write(',')
 
-   topThreeComments = posts.comments[0:3] # a list with top 3 comments (class=comment)
-   for comment in topThreeComments:
-      userOutput.write(str(comment.author))
-      userOutput.write('\n')
+    topThreeComments = posts.comments[0:3] # a list with top 3 comments (class=comment)
+    for comment in topThreeComments:
+       userOutput.write(str(comment.author))
+       userOutput.write(',')
 #DON'T CHANGE! FURTHER ANALYZE USING R or PYTHON
 
 print('Finished outputting user names')
 
 #Now print words from title, body of top 25 submission and top 3 comments of each posts
-top_posts2 = page.top(limit = 25)
+top_posts2 = page.top('day',limit = 25)
 for post in top_posts2:
 
     title = post.title
@@ -64,13 +64,13 @@ for post in top_posts2:
         newword = filter(tword, garbage)
         if newword.isalnum():
             outputFile.write(newword.lower())
-            outputFile.write('\n')
+            outputFile.write(',')
 #proces the words in the body
     for bword in bodyWords:
         newword = filter(bword, garbage)
         if newword.isalnum():
             outputFile.write(newword.lower())
-            outputFile.write('\n')
+            outputFile.write(',')
 
 #process top 3 comments of each post
     submissions = reddit.submission(id = post.id)
@@ -85,7 +85,13 @@ for post in top_posts2:
             newword = filter(word, garbage) # cut all the "garbages" (look on top of this file)
             if newword.isalnum():
                 outputFile.write(newword.lower())
-                outputFile.write('\n')
+                outputFile.write(',')
+
+#add a ZYXYZ and a new line at the end so the files don't end with comma
+outputFile.write('ZYXYZ')
+userOutput.write('ZYXYZ')
+outputFile.write('\n')
+userOutput.write('\n')
 
 #close files
 outputFile.close() # this should be after I process the file
