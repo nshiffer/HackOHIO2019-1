@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 import praw
 
-id = 'Ed-ggD3N-UMFZQ'
-secret = 'f_TA7tTacndu7o58eSqT0kfQtKM'  # in the picture
+id = #
+secret = #  # in the picture
 agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36'
 reddit = praw.Reddit(client_id=id, client_secret=secret, user_agent=agent)
 
